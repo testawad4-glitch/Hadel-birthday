@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إلى هديل ❤️</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(circle at 50% 20%,#3b2358 0,#171126 45%,#090711 100%);color:#fff;overflow:hidden}.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#fff 1px,transparent 1px);background-size:90px 90px,140px 140px;background-position:20px 30px,60px 80px;opacity:.25;animation:drift 18s linear infinite}@keyframes drift{to{transform:translateY(30px)}}.screen{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}.card{width:min(680px,94vw);padding:38px 24px;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:rgba(255,255,255,.07);backdrop-filter:blur(12px);box-shadow:0 20px 70px rgba(0,0,0,.35)}h1{font-size:clamp(30px,8vw,58px);margin:8px 0 16px;font-weight:700}p{font-size:clamp(17px,4vw,22px);line-height:2;color:#eee;margin:12px 0}.small{font-size:15px;color:#c9bfd7}.btn{border:0;border-radius:999px;padding:14px 28px;font-size:18px;font-weight:700;color:white;background:linear-gradient(135deg,#d85b9d,#8b5cf6);cursor:pointer;box-shadow:0 8px 30px rgba(180,80,180,.25);transition:.25s}.btn:hover{transform:translateY(-2px)}.gift{font-size:92px;cursor:pointer;animation:pulse 1.8s ease-in-out infinite}@keyframes pulse{50%{transform:scale(1.08)}}.hidden{display:none}.letter{white-space:pre-line;text-align:right;max-height:62vh;overflow:auto;padding:10px 4px}.heart{position:fixed;bottom:-30px;font-size:20px;animation:float 5s linear forwards;pointer-events:none}@keyframes float{to{transform:translateY(-110vh) rotate(360deg);opacity:0}}.birthday{font-size:clamp(34px,9vw,68px);background:linear-gradient(90deg,#ffd1e8,#fff,#e8d7ff);-webkit-background-clip:text;color:transparent}.date{display:inline-block;margin-top:10px;padding:7px 14px;border-radius:20px;background:rgba(255,255,255,.1);color:#eadff1}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<main class="screen">
+  <section class="card" id="intro">
+    <div class="small">هناك شيء صغير أعددته لكِ...</div>
+    <h1>هديل ❤️</h1>
+    <p>لكن عليكِ اكتشافه بنفسك.</p>
+    <button class="btn" onclick="startGift()">ابدئي ✨</button>
+  </section>
+
+  <section class="card hidden" id="gift">
+    <div class="small">اضغطي على الهدية 🎁</div>
+    <div class="gift" onclick="openLetter()">🎁</div>
+  </section>
+
+  <section class="card hidden" id="letterBox">
+    <h1>إلى هديل... ❤️</h1>
+    <div class="letter">
+      <p>ربما لا أستطيع أن أكون معكِ في يوم ميلادك،
+لكنني أردت أن أترك لكِ شيئًا صغيرًا يذكّركِ بأن هناك شخصًا فكر فيكِ في هذا اليوم،
+وأراد أن يصنع لكِ شيئًا بنفسه.
+
+أتمنى أن يكون عامكِ الجديد مليئًا بالأيام الجميلة،
+والضحكات التي تأتي من القلب،
+والأشياء التي تتمنينها وتصل إليكِ في الوقت المناسب.
+
+وأتمنى أن تبقى في حياتكِ دائمًا أسباب كثيرة تجعلكِ تبتسمين. ❤️</p>
+    </div>
+    <button class="btn" onclick="finish()">هناك شيء أخير... ✨</button>
+  </section>
+
+  <section class="card hidden" id="final">
+    <div class="small">28 سبتمبر 2026</div>
+    <h1 class="birthday">كل عام وانتي بخير حبيبتي. 🎂❤</h1>
+    <p>أتمنى أن يكون عامكِ الجديد أجمل من كل ما تتمنين. ✨</p>
+  </section>
+</main>
+<script>
+let audioCtx, master;
+function tone(freq,start,dur,vol=.035){if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0,start);g.gain.linearRampToValueAtTime(vol,start+.08);g.gain.exponentialRampToValueAtTime(.001,start+dur);o.connect(g).connect(master);o.start(start);o.stop(start+dur+.05)}
+function music(){audioCtx=new (window.AudioContext||window.webkitAudioContext)();master=audioCtx.createGain();master.gain.value=.6;master.connect(audioCtx.destination);let t=audioCtx.currentTime;const notes=[261.63,329.63,392,329.63,293.66,349.23,440,349.23];notes.forEach((n,i)=>tone(n,t+i*0.65,.55,.045));setInterval(()=>{let base=audioCtx.currentTime;[261.63,329.63,392,329.63].forEach((n,i)=>tone(n,base+i*.7,.6,.035))},2800)}
+function show(id){document.querySelectorAll('.card').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+function startGift(){try{music()}catch(e){} show('gift')}
+function openLetter(){show('letterBox');hearts(12)}
+function finish(){show('final');hearts(30)}
+function hearts(n){for(let i=0;i<n;i++){setTimeout(()=>{const h=document.createElement('div');h.className='heart';h.textContent=Math.random()>.45?'❤':'✨';h.style.left=Math.random()*100+'vw';h.style.animationDuration=(3+Math.random()*3)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),6500)},i*90)}}
+</script>
+</body>
+</html>
